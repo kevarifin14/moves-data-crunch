@@ -1,0 +1,12 @@
+%h1 Hi
+
+%p= @moves_client.profile
+
+%p= @moves_client.daily_summary
+
+%p= @moves_client.daily_places
+
+= high_chart('daily', ChartGenerators::Dashboard::ColumnChart.call(moves_client: @moves_client))
+
+
+.btn.btn-default= link_to 'Logout', destroy_user_session_path, method: 'delete'

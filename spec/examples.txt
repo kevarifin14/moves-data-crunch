@@ -1,0 +1,4 @@
+example_id                                      | status | run_time        |
+----------------------------------------------- | ------ | --------------- |
+./spec/models/user_spec.rb[1:1:1]               | failed | 0.09539 seconds |
+./spec/routing/dashboard_routing_spec.rb[1:1:1] | passed | 0.01869 seconds |
