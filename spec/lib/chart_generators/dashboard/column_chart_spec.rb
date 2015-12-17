@@ -34,14 +34,9 @@ RSpec.describe ChartGenerators::Dashboard::ColumnChart do
     is_expected.to eq(
       [
         {
-          name: 'Walking',
-          data: [100.0],
+          name: 'Distance',
+          data: [100.0, 200.0],
           color: '#1BC98E',
-        },
-        {
-          name: 'Cycling',
-          data: [200.0],
-          color: '#1CA8DD',
         },
       ]
     )
@@ -65,7 +60,7 @@ RSpec.describe ChartGenerators::Dashboard::ColumnChart do
       },
       tooltip: { valueSuffix: ' meters' },
       credits: { enabled: false },
-      legend: { layout: 'vertical', style: {} },
+      legend: { enabled: false },
       plotOptions: { areaspline: {} },
       subtitle: {},
     )

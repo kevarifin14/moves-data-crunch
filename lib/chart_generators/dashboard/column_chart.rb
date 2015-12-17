@@ -22,26 +22,21 @@ module ChartGenerators
         ) do |f|
           axes(f)
           f.tooltip(valueSuffix: ' meters')
-          f.series(walking_data)
-          f.series(cycling_data)
+          f.series(moves_data)
+          f.legend(enabled: false)
         end
       end
 
       private
 
-      def walking_data
+      def moves_data
         {
-          name: 'Walking',
-          data: [daily_activity.first.fetch('distance').to_f],
+          name: 'Distance',
+          data: [
+            daily_activity.first.fetch('distance').to_f,
+            daily_activity.second.fetch('distance').to_f,
+          ],
           color: chart_colors.fetch(:green),
-        }
-      end
-
-      def cycling_data
-        {
-          name: 'Cycling',
-          data: [daily_activity.second.fetch('distance').to_f],
-          color: chart_colors.fetch(:blue),
         }
       end
 
