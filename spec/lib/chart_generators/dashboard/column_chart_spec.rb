@@ -14,10 +14,12 @@ RSpec.describe ChartGenerators::Dashboard::ColumnChart do
     [{
       'summary' => [
         {
-          'distance' => 100.0
+          'activity' => 'walking',
+          'distance' => 100.0,
         },
         {
-          'distance' => 200.0
+          'activity' => 'cycling',
+          'distance' => 200.0,
         },
       ]
     }]
@@ -44,7 +46,7 @@ RSpec.describe ChartGenerators::Dashboard::ColumnChart do
 
   its(:options) do
     is_expected.to eq(
-      title: { text: nil },
+      title: { text: 'Past Month Cycling and Walking Distance Totals' },
       chart: {
         defaultSeriesType: 'column',
         style: {
@@ -55,7 +57,7 @@ RSpec.describe ChartGenerators::Dashboard::ColumnChart do
       xAxis: { categories: %w[Walking Cycling] },
       yAxis: {
         min: 0,
-        title: { text: nil },
+        title: { text: 'Distance (m)' },
         gridLineColor: '#EEE',
       },
       tooltip: { valueSuffix: ' meters' },
