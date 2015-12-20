@@ -2,12 +2,8 @@ require './lib/chart_generators/base_chart'
 
 module ChartGenerators
   module Dashboard
-    # Generates stacked column charts for dashboard
+    # Generates column charts for dashboard
     class ColumnChart
-      DATA_MAP = {
-        'walking' => 0,
-        'cycling' => 1,
-      }
       attr_accessor :moves_client, :chart_colors, :base_chart
 
       def self.call(moves_client:)

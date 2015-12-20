@@ -8,6 +8,12 @@ module Moves
       'walking' => 0,
       'cycling' => 1,
     }
+
+    EXERCISE_DATA_MAP = {
+      'basketball' => 0,
+      'dancing' => 1,
+      'weight_training' => 2,
+    }
     attr_accessor :client
 
     def initialize(access_token:)
@@ -26,6 +32,34 @@ module Moves
           activity_name = activity.fetch('activity')
           if DATA_MAP.key?(activity_name)
             sums[DATA_MAP.fetch(activity_name)] += activity.fetch('distance')
+          end
+        end
+      end
+      sums
+    end
+
+    def exercise_month_data
+      sums = [
+        {
+          name: 'Basketball',
+          y: 0.0,
+        },
+        {
+          name: 'Dancing',
+          y: 0.0,
+        },
+        {
+          name: 'Weight Training',
+          y: 0.0,
+        },
+      ]
+      monthly_summary(Time.zone.today).each do |daily_summary|
+        next if activity_summary(daily_summary).nil?
+        activity_summary(daily_summary).each do |activity|
+          activity_name = activity.fetch('activity')
+          if EXERCISE_DATA_MAP.key?(activity_name)
+            sums[EXERCISE_DATA_MAP.fetch(activity_name)][:y] +=
+              activity.fetch('duration')
           end
         end
       end

@@ -48,6 +48,11 @@ RSpec.describe Moves::ApiClient do
             'distance' => 3693.0,
             'calories' => 98,
           },
+          {
+            'activity' => 'basketball',
+            'duration' => 3000.0,
+            'calories' => 324,
+          },
         ],
         'caloriesIdle' => 1694,
         'lastUpdate' => '20151211T212955Z',
@@ -70,9 +75,31 @@ RSpec.describe Moves::ApiClient do
             'distance' => 7221.0,
             'calories' => 194,
           },
+          {
+            'activity' => 'weight_training',
+            'duration' => 4264.0,
+            'calories' => 334,
+          },
         ],
         'caloriesIdle' => 1694,
         'lastUpdate' => '20151219T185036Z',
+      },
+    ]
+  end
+
+  let(:exercise_data_array) do
+    [
+      {
+        name: 'Basketball',
+        y: 3000.0,
+      },
+      {
+        name: 'Dancing',
+        y: 0.0,
+      },
+      {
+        name: 'Weight Training',
+        y: 4264.0,
       },
     ]
   end
@@ -91,5 +118,9 @@ RSpec.describe Moves::ApiClient do
 
   describe '#month_data' do
     specify { expect(client.month_data).to eq([6331.0, 10_914]) }
+  end
+
+  describe '#exercise_month_date' do
+    specify { expect(client.exercise_month_data).to eq(exercise_data_array) }
   end
 end
