@@ -20,7 +20,7 @@ class DashboardController < ApplicationController
   end
 
   def moves_client
-    Moves::Client.new(current_user.access_token)
+    Moves::ApiClient.new(access_token: current_user.access_token)
   end
 
   def update_access_token(token)

@@ -8,26 +8,12 @@ RSpec.describe ChartGenerators::Dashboard::ColumnChart do
     described_class.call(moves_client: moves_client)
   end
 
-  let(:moves_client) { Moves::Client.new('1234') }
-
-  let(:daily_summary_hash) do
-    [{
-      'summary' => [
-        {
-          'activity' => 'walking',
-          'distance' => 100.0,
-        },
-        {
-          'activity' => 'cycling',
-          'distance' => 200.0,
-        },
-      ]
-    }]
-  end
+  let(:moves_client) { Moves::ApiClient.new(access_token: '1234') }
 
   before do
-    allow(moves_client).to receive(:daily_summary)
-      .and_return(daily_summary_hash)
+    allow(moves_client).to receive(:month_data)
+      .and_return([100.0, 200.0])
+    allow(Date).to receive(:today).and_return(Date.parse('2015-12-30'))
   end
 
   it { is_expected.to be_an_instance_of(LazyHighCharts::HighChart) }
@@ -46,7 +32,7 @@ RSpec.describe ChartGenerators::Dashboard::ColumnChart do
 
   its(:options) do
     is_expected.to eq(
-      title: { text: 'Past Month Cycling and Walking Distance Totals' },
+      title: { text: 'December Cycling and Walking Distance Totals' },
       chart: {
         defaultSeriesType: 'column',
         style: {
