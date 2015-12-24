@@ -1,14 +1,11 @@
-%nav
-  .nav-wrapper
-    = link_to 'Moves Data Cruncher', root_path
-    %ul.right.hide-on-med-and-down
-      %li
-        = link_to 'Home', root_path
-      %li
-        = link_to 'Logout', destroy_user_session_path, method: 'delete'
+= render 'layouts/nav'
 
-.col-md-6
-  = high_chart('walking_and_cycling', ChartGenerators::Dashboard::ColumnChart.call(moves_client: @moves_client))
+.row
+  .col.s6
+    = high_chart('walking_and_cycling', ChartGenerators::Dashboard::ColumnChart.call(moves_client: @moves_client))
 
-.col-md-6
-  = high_chart('exercise', ChartGenerators::Dashboard::PieChart.call(moves_client: @moves_client))
+  .col.s6
+    = high_chart('exercise', ChartGenerators::Dashboard::PieChart.call(moves_client: @moves_client))
+.row
+  .col.s12
+    = high_chart('line', ChartGenerators::Dashboard::LineChart.call(moves_client: @moves_client))

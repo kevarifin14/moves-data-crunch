@@ -7,6 +7,7 @@ module Moves
     DATA_MAP = {
       'walking' => 0,
       'cycling' => 1,
+      'running' => 2,
     }
 
     EXERCISE_DATA_MAP = {
@@ -25,7 +26,7 @@ module Moves
     end
 
     def month_data
-      sums = [0.0, 0.0]
+      sums = [0.0, 0.0, 0.0]
       monthly_summary(Time.zone.today).each do |daily_summary|
         next if activity_summary(daily_summary).nil?
         activity_summary(daily_summary).each do |activity|
@@ -60,6 +61,39 @@ module Moves
           if EXERCISE_DATA_MAP.key?(activity_name)
             sums[EXERCISE_DATA_MAP.fetch(activity_name)][:y] +=
               activity.fetch('duration')
+          end
+        end
+      end
+      sums
+    end
+
+    def cumulative_line_data
+      sums = [
+        {
+          name: 'Walking',
+          data: [0.0],
+        },
+        {
+          name: 'Cycling',
+          data: [0.0],
+        },
+        {
+          name: 'Running',
+          data: [0.0],
+        },
+      ]
+      monthly_summary(Time.zone.today).each_with_index do |daily_summary, index|
+        summary = activity_summary(daily_summary)
+        next if summary.nil?
+        DATA_MAP.each do |activity_name, sum_index|
+          activity_data =
+            summary.detect { |activity| activity['activity'] == activity_name }
+          data_array = sums[sum_index].fetch(:data)
+          if activity_data.nil?
+            data_array[index] = data_array[index - 1]
+          else
+            data_array[index] =
+              data_array[index - 1] + activity_data.fetch('distance')
           end
         end
       end

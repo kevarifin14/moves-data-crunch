@@ -3,7 +3,7 @@ require './lib/chart_generators/base_chart'
 module ChartGenerators
   module Dashboard
     # Generates column charts for dashboard
-    class ColumnChart
+    class LineChart
       attr_accessor :moves_client, :chart_colors, :base_chart
 
       def self.call(moves_client:)
@@ -18,14 +18,16 @@ module ChartGenerators
 
       def call
         base_chart.chart(
-          chart_type: 'column',
+          chart_type: 'line',
         ) do |f|
           axes(f)
           f.title(
-            text: "#{date_string} Cycling and Walking Distance Totals",
+            text: 'Cumulative Data',
           )
           f.tooltip(valueSuffix: ' meters')
-          f.series(moves_data)
+          moves_data.each do |data|
+            f.series(data)
+          end
           f.legend(enabled: false)
         end
       end
@@ -33,11 +35,7 @@ module ChartGenerators
       private
 
       def moves_data
-        {
-          name: 'Distance',
-          data: moves_client.month_data,
-          color: chart_colors.fetch(:green),
-        }
+        moves_client.cumulative_line_data
       end
 
       def date_string
@@ -45,8 +43,16 @@ module ChartGenerators
       end
 
       def axes(f)
-        f.xAxis(categories: %w[Walking Cycling Running])
+        f.xAxis(x_axis)
         f.yAxis(y_axis)
+      end
+
+      def x_axis
+        {
+          title: { text: 'Date' },
+          categories:
+            (Time.zone.today.beginning_of_month..Time.zone.today).to_a,
+        }
       end
 
       def y_axis
