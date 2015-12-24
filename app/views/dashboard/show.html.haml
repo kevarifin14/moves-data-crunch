@@ -1,13 +1,12 @@
-%h1 Moves Data Cruncher
+%nav
+  .nav-wrapper
+    = link_to 'Moves Data Cruncher', root_path
+    %ul.right.hide-on-med-and-down
+      %li
+        = link_to 'Home', root_path
+      %li
+        = link_to 'Logout', destroy_user_session_path, method: 'delete'
 
-.navbar.navbar-default
-  .container-fluid
-    .collapse.navbar-collapse
-      %ul.nav.navbar-nav
-        %li
-          = link_to 'Home', root_path
-        %li
-          = link_to 'Logout', destroy_user_session_path, method: 'delete'
 .col-md-6
   = high_chart('walking_and_cycling', ChartGenerators::Dashboard::ColumnChart.call(moves_client: @moves_client))
 

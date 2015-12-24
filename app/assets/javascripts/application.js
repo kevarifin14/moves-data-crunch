@@ -16,3 +16,4 @@
 //= require highcharts/highcharts
 //= require_tree .
 //= require bootstrap-sprockets
+//= require materialize-sprockets

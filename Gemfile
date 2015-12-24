@@ -14,6 +14,7 @@ gem 'turbolinks' # https://github.com/rails/turbolinks
 gem 'jbuilder' # JSON templating
 gem 'method_man' # Defines a MethodObject class
 gem 'bootstrap-sass' # Twitter Bootstrap
+gem 'materialize-sass' # Materialize CSS
 gem 'moves' # Ruby client for Moves
 gem 'lazy_high_charts' # highcharts.js
 gem 'oauth2'
